@@ -39,6 +39,8 @@ php artisan vendor:publish --provider="INeop\FileUpload\Providers\FileUploadServ
 
 ### 1- FileUploadService class
 *this class store file and return file name to store it in your model*.
+* it provide hash name for file
+* it provide auto resize image 
 * it provide all methods in intervention image package.
 * it provide config file to set max width, max height and quality.
 
