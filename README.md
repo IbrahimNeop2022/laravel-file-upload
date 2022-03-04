@@ -152,6 +152,15 @@ $post->save();
 MediUpload::make(request('image'))->setModel($post)->store('image', 's3');
 
 ```
+You can upload multiple files.
+```php
+$post = new Post();
+//...
+$post->save();
+
+MediUpload::make(request('files'))->setModel($post)->store('images');
+
+```
 You can use ***all methods in intervention image package***.
 ```php
 $post = new Post();
