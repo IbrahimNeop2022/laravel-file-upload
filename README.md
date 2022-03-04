@@ -2,13 +2,32 @@
 # File Upload Service
 
 #### Installation
-```bach
-// install intervention image package
-composer require intervention/image
 
-// install media library package
-composer require "spatie/laravel-medialibrary:^10.0.0"
+```bach
+composer require i-neop/laravel-file-upload
 ```
+
+open your Laravel config file config/app.php and add the following lines.
+
+In the _$providers_ array add the service providers for this package.
+
+```
+Intervention\Image\ImageServiceProvider::class
+```
+
+Add the facade of this package to the _$aliases_ array.
+
+```
+'Image' => Intervention\Image\Facades\Image::class
+```
+
+publish media library migrations
+
+```
+php artisan vendor:publish --provider="Spatie\MediaLibrary\MediaLibraryServiceProvider" --tag="migrations"
+php artisan migrate
+```
+
 1. [Intervention Image documentation](https://image.intervention.io/v2).
 2. [Laravel-media library documentation](https://spatie.be/docs/laravel-medialibrary).
 
@@ -137,4 +156,24 @@ MediUpload::make(request('image'))
     ])
     ->store('image');
 ```
+To retrieve files you can use the getMedia-method:
+
+```php
+    $mediaItems = $yourModel->getMedia();
+```
+
+the getFirstMedia and getFirstMediaUrl convenience-methods are also provided:
+
+```php
+    $media = $yourModel->getFirstMedia();
+    $url = $yourModel->getFirstMediaUrl();
+```
+
+If you want to remove all associated media in a specific collection you can use the clearMediaCollection method. It also accepts the collection name as an optional parameter:
+
+```php
+    $yourModel->clearMediaCollection(); // all media will be deleted
+    $yourModel->clearMediaCollection('images'); // all media in the images collection will be deleted
+```
+
 ***recommend:*** read [Laravel-media library documentation](https://spatie.be/docs/laravel-medialibrary).
