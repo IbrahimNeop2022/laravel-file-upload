@@ -112,7 +112,21 @@ php artisan storage:link
 *this class use media-library package to store media files for your model*.
 * it provide all methods in intervention image package.
 * it provide all methods in media-library package.
+* it provide upload multiple files.
 * it provide config file to set max width, max height and quality.
+
+To associate media with a model, the model must implement the following interface and trait:
+
+```php
+namespace App\Models;
+use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+class YourModel extends Model implements HasMedia
+{
+    use InteractsWithMedia;
+}
+```
 
 Here are a few short examples of what you can do:
 ```php
