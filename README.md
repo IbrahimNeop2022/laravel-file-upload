@@ -28,6 +28,12 @@ php artisan vendor:publish --provider="Spatie\MediaLibrary\MediaLibraryServicePr
 php artisan migrate
 ```
 
+publish config 
+
+```
+php artisan vendor:publish --provider="INeop\FileUpload\Providers\FileUploadServiceProvider" --tag="file-upload-config"
+```
+
 1. [Intervention Image documentation](https://image.intervention.io/v2).
 2. [Laravel-media library documentation](https://spatie.be/docs/laravel-medialibrary).
 
