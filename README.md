@@ -141,7 +141,7 @@ Here are a few short examples of what you can do:
 $post = new Post();
 //...
 $post->save();
-MediUpload::make(request('image'))->setModel($post)->store();
+MediaUpload::make(request('image'))->setModel($post)->store();
 
 ```
 You can add collection and disk, by default disk is public.
@@ -149,7 +149,7 @@ You can add collection and disk, by default disk is public.
 $post = new Post();
 //...
 $post->save();
-MediUpload::make(request('image'))->setModel($post)->store('image', 's3');
+MediaUpload::make(request('image'))->setModel($post)->store('image', 's3');
 
 ```
 You can upload multiple files.
@@ -158,7 +158,7 @@ $post = new Post();
 //...
 $post->save();
 
-MediUpload::make(request('files'))->setModel($post)->store('images');
+MediaUpload::make(request('files'))->setModel($post)->store('images');
 
 ```
 You can use ***all methods in intervention image package***.
@@ -166,7 +166,7 @@ You can use ***all methods in intervention image package***.
 $post = new Post();
 //...
 $post->save();
-MediUpload::make(request('image'))
+MediaUpload::make(request('image'))
     ->resize(500, 200)
     ->crop(100, 100, 25, 25)
     ->setModel($post)
@@ -177,7 +177,7 @@ You can use ***all methods in media library package***.
 $post = new Post();
 //...
 $post->save();
-MediUpload::make(request('image')) 
+MediaUpload::make(request('image')) 
     ->resize(500, 200)
     ->setModel($post)
     ->usingName('my-image-name')
