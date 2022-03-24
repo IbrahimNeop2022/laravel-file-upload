@@ -3,6 +3,8 @@
 
 namespace INeop\FileUpload\Classes;
 
+use Error;
+use ErrorException;
 use Exception;
 use Illuminate\Http\File;
 use Illuminate\Support\Facades\Storage;
@@ -33,10 +35,14 @@ class FileUploadService implements FileUploadInterface
      */
     public function make($file)
     {
+        if (!$file) {
+            throw new Exception('File cannot be null');
+        }
+
         $this->file = is_string($file) ? new File($file) : $file;
 
-        if (Str::contains($file->getMimeType(), 'image')) {
-            $this->image = Image::make($file);
+        if (Str::contains($this->file->getMimeType(), 'image')) {
+            $this->image = Image::make($this->file);
         }
 
         $this->quality = config('file-upload.quality');

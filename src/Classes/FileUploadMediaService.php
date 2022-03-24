@@ -31,12 +31,15 @@ class FileUploadMediaService implements FileUploadInterface
     public function make($file)
     {
         if (is_iterable($file)) {
+            //handle all files
             foreach ($file as $item){
                 $this->files[] = (new FileUploadService())->make($item);
             }
-        }else{
+
+        } else{
             $this->file = (new FileUploadService())->make($file);
         }
+
         return $this;
     }
 
@@ -56,6 +59,7 @@ class FileUploadMediaService implements FileUploadInterface
         $this->model = $model;
 
         if ($this->files) {
+
             $this->setMultiMedia();
 
             return $this;
@@ -86,6 +90,7 @@ class FileUploadMediaService implements FileUploadInterface
             $this->storeMany($collection, $disk);
             return;
         }
+        
         $this->media->toMediaCollection($collection, $disk);
     }
 
