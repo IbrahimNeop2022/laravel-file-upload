@@ -24,7 +24,7 @@ class FileUploadMediaService implements FileUploadInterface
         $image,
         $files = [];
 
-/*
+    /*
  * FileService($file)->store()
  * */
 
@@ -32,11 +32,10 @@ class FileUploadMediaService implements FileUploadInterface
     {
         if (is_iterable($file)) {
             //handle all files
-            foreach ($file as $item){
+            foreach ($file as $item) {
                 $this->files[] = (new FileUploadService())->make($item);
             }
-
-        } else{
+        } else {
             $this->file = (new FileUploadService())->make($file);
         }
 
@@ -47,13 +46,6 @@ class FileUploadMediaService implements FileUploadInterface
      * @param Model $model
      * @return $this
      */
-//    public function setModel($model)
-//    {
-//        $this->model = $model;
-//
-//        return $this;
-//    }
-
     public function setModel(Model $model)
     {
         $this->model = $model;
@@ -74,10 +66,12 @@ class FileUploadMediaService implements FileUploadInterface
 
     protected function setMultiMedia()
     {
-        foreach ($this->files as $file){
+        foreach ($this->files as $file) {
             $file->store();
             $this->mediaCollection[] = $this->model->addMedia($file->getFilePath());
         }
+
+        $this->files = [];
     }
 
     /**
@@ -86,19 +80,21 @@ class FileUploadMediaService implements FileUploadInterface
      */
     public function store($collection = 'default', $disk = '')
     {
-        if ($this->mediaCollection){
+        if ($this->mediaCollection) {
             $this->storeMany($collection, $disk);
             return;
         }
-        
+
         $this->media->toMediaCollection($collection, $disk);
     }
 
     protected function storeMany($collection, $disk)
     {
-        foreach ($this->mediaCollection as $media){
+        foreach ($this->mediaCollection as $media) {
             $media->toMediaCollection($collection, $disk);
         }
+
+        $this->mediaCollection = [];
     }
 
 
@@ -118,32 +114,28 @@ class FileUploadMediaService implements FileUploadInterface
      */
     public function __call($name, $arguments)
     {
-        try{
-            if ($this->mediaCollection){
+        try {
+            if ($this->mediaCollection) {
                 foreach ($this->mediaCollection as $media) {
                     $media->$name(...$arguments);
                 }
-            }else{
+            } else {
                 $this->media?->$name(...$arguments);
             }
-
-        }catch(Exception $e){
-
+        } catch (Exception $e) {
         }
 
-        try{
-            if ($this->files){
+        try {
+            if ($this->files) {
                 foreach ($this->files as $file) {
                     $file->$name(...$arguments);
                 }
-            }else{
+            } else {
                 $this->file?->$name(...$arguments);
             }
-        }catch(Exception $e){
-
+        } catch (Exception $e) {
         }
 
         return $this;
     }
-
 }
